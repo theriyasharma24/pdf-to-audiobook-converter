@@ -1,33 +1,56 @@
+#importing the modules
 import pyttsx3
 import PyPDF2
+from tkinter import *
+from tkinter import messagebox
+from tkinter import filedialog
 
-#In place of filelocation give your PDF's location in single quotes ''
-book=open('oop.PDF','rb')
-pdfReader=PyPDF2.PdfFileReader(book)
-pages=pdfReader.numPages
+#function to convert pdf to audiobook
+def pdftoaudio():
 
-speaker=pyttsx3.init()
+    window1=Tk()
+    window1.configure(bg='blue4')
+    window1.geometry("500x500")
+    window1.title("PDF to Audiobook Converter!")
+    window1.configure(bg="midnightblue")
+    Label(window1,text="PDF to Audiobook Converter",font=("Elephant",16),bg="pink").place(x=90,y=0)
 
-#rate of speed can be change as per convenience 
-#increase the value for slower speed
-rate = speaker.getProperty('rate')   
-speaker.setProperty('rate', 130)
+    #function to get the pdf file
+    def getfile():
+        global path
+        path= filedialog.askopenfilename()
+    
+    #function to convert the pdf file to audiobook
+    def convert():
+        book=open(path,'rb')
+        pdfReader=PyPDF2.PdfFileReader(book)
+        pages=pdfReader.numPages
+        text=''
+        Label(window1,text="Converting.....",font=("Elephant",16),bg="pink").place(x=170,y=300)
+        for i in range(0,pages):
+                speaker=pyttsx3.init()
 
-#voice can be changed as per convenience
-#For male voice put
-#speaker.setProperty('voice', voices[0].id)
+                rate = speaker.getProperty('rate')   
+                speaker.setProperty('rate', 130)
 
-voices = speaker.getProperty('voices')
-speaker.setProperty('voice', voices[1].id)
+                voices = speaker.getProperty('voices')
+                speaker.setProperty('voice', voices[1].id)
+                page=pdfReader.getPage(i)
+                text+=page.extractText()
+          
+        #saving the audiobook
+        file=filedialog.asksaveasfilename(defaultextension='.mp3')
+        speaker.save_to_file(text, file)
 
-#Write the page number of the PDF you want audiobook for
-#Here the page no. is 2
-
-page=pdfReader.getPage(2)
-
-text=page.extractText()
+        Label(window1,text="Your audiobook is saved!",font=("Elephant",16),bg="pink").place(x=120,y=300)
+        speaker.runAndWait()
 
 
-#Your audiobook will be saved with name audio.mp3
-speaker.save_to_file(text, 'audio.mp3')
-speaker.runAndWait()
+    Button(window1,text="  Select PDF  ",bd=5,width=20,font=("Aharani",10,"bold"),height=1,bg="gold",command=getfile).place(x=160,y=100)
+    Button(window1,text="  Convert PDF  ",bd=5,width=20,font=("Aharani",10,"bold"),height=1,bg="gold",command=convert).place(x=160,y=150)
+    Button(window1,text="  Exit  ",bd=5,width=20,font=("Aharani",10,"bold"),height=1,bg="gold",command=lambda:(window1.destroy())).place(x=160,y=200)
+
+    window1.mainloop()
+
+
+pdftoaudio()
