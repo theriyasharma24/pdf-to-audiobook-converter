@@ -1,6 +1,7 @@
 <h1 align="center">PDF-to-Audiobook-Converter</h1>
 <p align="center"><img width=600 height= 400 src="https://user-images.githubusercontent.com/83356926/149663476-a627607b-5592-4d57-b9d1-938030c4962a.png"></p>
 <h2>This program in python can convert PDF💻 files into audiobooks 🔊 in just few seconds!</h2>
+The main objective of this project was to provide the visually impaired students audiobooks of their study material instantly. Manually recording books takes a lot of effort and time from the student volunteers. Thus, this project can make the process easier.<br><br>
 Here are the steps you need to follow for the code to work in your system!<br><br>
 1. Install the pyttsx3, PyPDF2, and tkinter modules.
 <p align="center"><img src="https://miro.medium.com/max/363/1*k_M_v08Nca8zrU66kZ_qXQ.png"></p>
